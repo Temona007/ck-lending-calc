@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Credit Key Lending Calculator</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Calculator styles -->
+    <link href="ck-landing-calc.css" rel="stylesheet">
+    <!-- Calculator formula -->
+    <script src="ck-landing-calc.js"></script>
+
+  </head>
+  <body>
+
+    <div class="container" id="aov-calculator">
+      <div class="row justify-content-center">
+        <div class="col-xl-12 col-lg-12 col-md-12">
+          <!-- Form -->
+          <form onsubmit="event.preventDefault();">
+            <div class="row">
+              <div class="col-lg-5 col-md-5">
+                <div class="block-inpts">
+                  <label for="packagePlan">Order amount</label>
+                  <span class="" id="inputDollar2">
+                    <input id="orderAmmount" oninput="LendingCalc(); addDollarSign2();" type="text" class="number-separator form-control" placeholder="Enter a number">
+                  </span>
+                </div>
+                <div class="block-inpts">
+                  <label for="range" class="form-label">Interest rate %</label>
+                  <div class="range-wrap">
+                    <div class="range-value" id="rangeV"></div>
+                    <input id="range" oninput="LendingCalc();" type="range" min="1" max="6" step="1" value="2" >
+                  </div>
+                </div>
+                <div class="block-inpts">
+                  <label for="creditKeyAverageLift">Loan terms</label>
+                  <select class="custom-select custom-select-lg mb-3" id="loanTerms" onchange="LendingCalc();">
+                    <option selected>Select</option>
+                    <option value="1">1 Month</option>
+                    <option value="2">2 Months</option>
+                    <option value="3">3 Months</option>
+                    <option value="6">6 Months</option>
+                    <option value="9">9 Months</option>
+                    <option value="12">12 Months</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-lg-6 offset-lg-1 col-md-7 my-auto">
+                <div id="block-results">
+                  
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                      <div class="btn-res">
+                        <label for="monthlyPaymentAmount" class="btn-label creditKeyDifference">Monthly payment amount</label>
+                        <button id="monthlyPaymentAmount" class="btn btn-lg btn-primary">$0</button>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                      <div class="btn-res">
+                        <label  for="monthlyInterestZeroPercent" class="btn-label">Monthly interest <span id="percent-interest">(with 0% for 30 days)</span></label>
+                        <button id="monthlyInterestZeroPercent" class="btn btn-lg btn-primary">$0</button>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                      <div class="btn-res">
+                       <label for="totalInterest" class="btn-label">Total interest</label>
+                       <button id="totalInterest" class="btn btn-lg btn-primary">$0</button>
+                      </div>
+                    </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form> 
+        </div>
+      </div>
+    </div>
+
+    <script src="easy-number-separator.js"></script>
+    <script>
+        // Range Slider
+        const range = document.getElementById('range');
+        const rangeV = document.getElementById('rangeV');
+        setValue = ()=>{
+          const
+            newValue = Number( (range.value - range.min) * 100 / (range.max - range.min) ),
+            newPosition = 10 - (newValue * 0.2);
+          rangeV.innerHTML = `<span>${range.value}</span>`;
+          rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+        };
+        document.addEventListener("DOMContentLoaded", setValue);
+        range.addEventListener('input', setValue);
+
+        // Commas
+        easyNumberSeparator({
+          selector: '.number-separator',
+          separator: ','
+        })
+    </script>
+
+
+  </body>
+</html>
